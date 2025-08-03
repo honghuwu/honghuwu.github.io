@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="最近在研究 DQN_HollowKnight 的作业，正好趁这个机会来熟悉一下假期学的一些深度学习的知识，主要是关于CNN和强化学习。\n这篇文章就先就着这个项目的大脑部分 Model.py 来讲一下涉及的知识点吧。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 class BasicBlock(layers.Layer): def __init__(self,filter_num,name,stride=1, **kwargs): super(BasicBlock, self).__init__( **kwargs) self.filter_num = filter_num self.stride = stride self.layers = [] self.conv1=layers.Conv2D(filter_num,3,strides=stride,padding=&#39;same&#39;, name = name+&#39;_1&#39;) # self.bn1=layers.BatchNormalization() self.relu=layers.Activation(&#39;relu&#39;) self.conv2=layers.Conv2D(filter_num,3,strides=1,padding=&#39;same&#39;, name = name+&#39;_2&#39;) # self.bn2 = layers.BatchNormalization() self.layers.append(self.conv1) self.layers.append(self.conv2) # self.layers.append(self.bn1) # self.layers.append(self.bn2) if stride!=1: self.downsample=models.Sequential() self.downsample.add(layers.Conv2D(filter_num,1,strides=stride)) self.layers.append(self.downsample) else: self.downsample=lambda x:x def get_layer(self, index): return self.layers[index] def get_layers(self): return self.layers def call(self,input,training=None): out=self.conv1(input) # out=self.bn1(out) out=self.relu(out) out=self.conv2(out) # out=self.bn2(out) identity=self.downsample(input) output=layers.add([out,identity]) output=tf.nn.relu(output) return output def get_config(self): config = { &#39;filter_num&#39;: self.filter_num, &#39;stride&#39;: self.stride } base_config = super(BasicBlock, self).get_config() return dict(list(base_config.items()) + list(config.items())) 代码上来就是这一部分，如果之前没有了解过ResNet的话，可能会感觉有点迷茫，确实也正如作者所说，这个项目并不适合初学者学习，因为有点复杂，所牵扯模型部分过多。\n">
 <title></title>
 
-<link rel='canonical' href='http://localhost:1313/p/'>
+<link rel='canonical' href='https://example.com/p/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="">
-<meta property='og:description' content="">
-<meta property='og:url' content='http://localhost:1313/p/'>
+<meta property='og:description' content="最近在研究 DQN_HollowKnight 的作业，正好趁这个机会来熟悉一下假期学的一些深度学习的知识，主要是关于CNN和强化学习。\n这篇文章就先就着这个项目的大脑部分 Model.py 来讲一下涉及的知识点吧。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 class BasicBlock(layers.Layer): def __init__(self,filter_num,name,stride=1, **kwargs): super(BasicBlock, self).__init__( **kwargs) self.filter_num = filter_num self.stride = stride self.layers = [] self.conv1=layers.Conv2D(filter_num,3,strides=stride,padding=&#39;same&#39;, name = name+&#39;_1&#39;) # self.bn1=layers.BatchNormalization() self.relu=layers.Activation(&#39;relu&#39;) self.conv2=layers.Conv2D(filter_num,3,strides=1,padding=&#39;same&#39;, name = name+&#39;_2&#39;) # self.bn2 = layers.BatchNormalization() self.layers.append(self.conv1) self.layers.append(self.conv2) # self.layers.append(self.bn1) # self.layers.append(self.bn2) if stride!=1: self.downsample=models.Sequential() self.downsample.add(layers.Conv2D(filter_num,1,strides=stride)) self.layers.append(self.downsample) else: self.downsample=lambda x:x def get_layer(self, index): return self.layers[index] def get_layers(self): return self.layers def call(self,input,training=None): out=self.conv1(input) # out=self.bn1(out) out=self.relu(out) out=self.conv2(out) # out=self.bn2(out) identity=self.downsample(input) output=layers.add([out,identity]) output=tf.nn.relu(output) return output def get_config(self): config = { &#39;filter_num&#39;: self.filter_num, &#39;stride&#39;: self.stride } base_config = super(BasicBlock, self).get_config() return dict(list(base_config.items()) + list(config.items())) 代码上来就是这一部分，如果之前没有了解过ResNet的话，可能会感觉有点迷茫，确实也正如作者所说，这个项目并不适合初学者学习，因为有点复杂，所牵扯模型部分过多。\n">
+<meta property='og:url' content='https://example.com/p/'>
 <meta property='og:site_name' content='Example Site'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' />
 <meta name="twitter:title" content="">
-<meta name="twitter:description" content="">
+<meta name="twitter:description" content="最近在研究 DQN_HollowKnight 的作业，正好趁这个机会来熟悉一下假期学的一些深度学习的知识，主要是关于CNN和强化学习。\n这篇文章就先就着这个项目的大脑部分 Model.py 来讲一下涉及的知识点吧。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 class BasicBlock(layers.Layer): def __init__(self,filter_num,name,stride=1, **kwargs): super(BasicBlock, self).__init__( **kwargs) self.filter_num = filter_num self.stride = stride self.layers = [] self.conv1=layers.Conv2D(filter_num,3,strides=stride,padding=&#39;same&#39;, name = name+&#39;_1&#39;) # self.bn1=layers.BatchNormalization() self.relu=layers.Activation(&#39;relu&#39;) self.conv2=layers.Conv2D(filter_num,3,strides=1,padding=&#39;same&#39;, name = name+&#39;_2&#39;) # self.bn2 = layers.BatchNormalization() self.layers.append(self.conv1) self.layers.append(self.conv2) # self.layers.append(self.bn1) # self.layers.append(self.bn2) if stride!=1: self.downsample=models.Sequential() self.downsample.add(layers.Conv2D(filter_num,1,strides=stride)) self.layers.append(self.downsample) else: self.downsample=lambda x:x def get_layer(self, index): return self.layers[index] def get_layers(self): return self.layers def call(self,input,training=None): out=self.conv1(input) # out=self.bn1(out) out=self.relu(out) out=self.conv2(out) # out=self.bn2(out) identity=self.downsample(input) output=layers.add([out,identity]) output=tf.nn.relu(output) return output def get_config(self): config = { &#39;filter_num&#39;: self.filter_num, &#39;stride&#39;: self.stride } base_config = super(BasicBlock, self).get_config() return dict(list(base_config.items()) + list(config.items())) 代码上来就是这一部分，如果之前没有了解过ResNet的话，可能会感觉有点迷茫，确实也正如作者所说，这个项目并不适合初学者学习，因为有点复杂，所牵扯模型部分过多。\n">
     </head>
     <body class="
     article-page
@@ -231,11 +231,11 @@
 
                             <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
                                 
-                                    <option value="http://localhost:1313/" selected>English</option>
+                                    <option value="https://example.com/" selected>English</option>
                                 
-                                    <option value="http://localhost:1313/zh-cn/" >中文</option>
+                                    <option value="https://example.com/zh-cn/" >中文</option>
                                 
-                                    <option value="http://localhost:1313/ar/" >عربي</option>
+                                    <option value="https://example.com/ar/" >عربي</option>
                                 
                             </select>
                         </li>
@@ -303,7 +303,7 @@
 
 
                 <time class="article-time--reading">
-                    0 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -318,7 +318,424 @@
     <section class="article-content">
     
     
-    
+    <p>最近在研究 DQN_HollowKnight 的作业，正好趁这个机会来熟悉一下假期学的一些深度学习的知识，主要是关于CNN和强化学习。</p>
+<p>这篇文章就先就着这个项目的大脑部分 Model.py 来讲一下涉及的知识点吧。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">BasicBlock</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filter_num</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">(</span><span class="n">BasicBlock</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">filter_num</span> <span class="o">=</span> <span class="n">filter_num</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="o">=</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filter_num</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">strides</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span><span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">+</span><span class="s1">&#39;_1&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.bn1=layers.BatchNormalization()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="o">=</span><span class="n">layers</span><span class="o">.</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="o">=</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filter_num</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">strides</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">+</span><span class="s1">&#39;_2&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.bn2 = layers.BatchNormalization()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.layers.append(self.bn1)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.layers.append(self.bn2)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">stride</span><span class="o">!=</span><span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">downsample</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">downsample</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filter_num</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">strides</span><span class="o">=</span><span class="n">stride</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">downsample</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">downsample</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">get_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">get_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">input</span><span class="p">,</span><span class="n">training</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># out=self.bn1(out)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">out</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># out=self.bn2(out)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">identity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">downsample</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output</span><span class="o">=</span><span class="n">layers</span><span class="o">.</span><span class="n">add</span><span class="p">([</span><span class="n">out</span><span class="p">,</span><span class="n">identity</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">output</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;filter_num&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">filter_num</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;stride&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">               <span class="bp">self</span><span class="o">.</span><span class="n">stride</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">base_config</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">BasicBlock</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">base_config</span><span class="o">.</span><span class="n">items</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码上来就是这一部分，如果之前没有了解过ResNet的话，可能会感觉有点迷茫，确实也正如作者所说，这个项目并不适合初学者学习，因为有点复杂，所牵扯模型部分过多。</p>
+<p>那我们先来讲一下关于ResNet吧。</p>
+<p><img src="/p/block.png"
+	width="841"
+	height="455"
+	srcset="/p/block_hu_c4deb84c249c4245.png 480w, /p/block_hu_64dd8b59224ec0c8.png 1024w"
+	loading="lazy"
+	
+		alt="block"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="184"
+		data-flex-basis="443px"
+	
+></p>
+<p>其实这个图片就很好的描述了残差神经网络做了什么，对于一个输入的X，我们会有一个非线性的函数$F(X)$对其进行操作，但是在函数叠加较多次（层数增多）时，模型很容易出现幻觉，因为经过了太多次的处理，之前的信息会迷失在处理所造成的误差之中，即使经过反向传播，也没有办法改变这一现状。所以ResNet受命于危难之际，应运而生。</p>
+<p>在对X操作之后，我们得到的$F(X)$可以和处理后的X连接起来，当作下一次输入，这样的话，模型始终能看到上一次处理前的信息，如果信息变化不大（这可能说明所变化的信息基本上都会造成误差，起反作用），那么反向传播后$F(X)$会逐渐趋近于0（无操作），使得模型更容易收敛。</p>
+<p>其实感觉文字的力量远不如代码，让我们少BB一点理论，直接实战开始。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">BasicBlock</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filter_num</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 调用了父类的初始化方法</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">(</span><span class="n">BasicBlock</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 通道数</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">filter_num</span> <span class="o">=</span> <span class="n">filter_num</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 步长</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 用来存放实例属性的layers</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 第一层卷积 步长stride会影响卷积输出的结果，使用的padding=&#39;same&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="o">=</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filter_num</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">strides</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span><span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">+</span><span class="s1">&#39;_1&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 批归一化层，不知道为什么被注释掉了</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.bn1=layers.BatchNormalization()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 激活层</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="o">=</span><span class="n">layers</span><span class="o">.</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="c1"># 第二层卷积，默认步长 = 1</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="o">=</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filter_num</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">strides</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">+</span><span class="s1">&#39;_2&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.bn2 = layers.BatchNormalization()</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.layers.append(self.bn1)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.layers.append(self.bn2)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#对输入的X进行处理，如果一开始stride ！= 1，那么就对X进行一个stride的一维卷积（丢弃一些像素）</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#如果stride = 1，那么就原路返回</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">stride</span><span class="o">!=</span><span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">downsample</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">downsample</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filter_num</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">strides</span><span class="o">=</span><span class="n">stride</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">downsample</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">downsample</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就是这一部分</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">input</span><span class="p">,</span><span class="n">training</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># out=self.bn1(out)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">out</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># out=self.bn2(out)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">identity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">downsample</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#最重要的叠加环节</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output</span><span class="o">=</span><span class="n">layers</span><span class="o">.</span><span class="n">add</span><span class="p">([</span><span class="n">out</span><span class="p">,</span><span class="n">identity</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#第二次激活再叠加之后</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">output</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后的代码就是将res和训练代码结合起来</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"> <span class="k">def</span> <span class="nf">build_resblock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filter_num</span><span class="p">,</span><span class="n">blocks</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Resnet&#34;</span><span class="p">,</span><span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">res_blocks</span><span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># may down sample</span>
+</span></span><span class="line"><span class="cl">        <span class="n">res_blocks</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">BasicBlock</span><span class="p">(</span><span class="n">filter_num</span><span class="p">,</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;_1&#39;</span><span class="p">,</span><span class="n">stride</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># just down sample one time</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">pre</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">blocks</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">res_blocks</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">BasicBlock</span><span class="p">(</span><span class="n">filter_num</span><span class="p">,</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;_2&#39;</span><span class="p">,</span><span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">res_blocks</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 这里作者独立的使用了两个网络进行训练，分别训练move和actions</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">_build_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">       <span class="c1"># ------------------ build evaluate_net ------------------</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">       
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">shared_model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># shared part</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># pre-process block</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.shared_model.add(Conv2D(64, (2,3,3),strides=(1,2,2), input_shape=self.input_shape, name=&#39;conv1&#39;))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># # self.shared_model.add(BatchNormalization(name=&#39;b1&#39;))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.shared_model.add(Activation(&#39;relu&#39;))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.shared_model.add(MaxPooling3D(pool_size=(2,2,2), strides=1, padding=&#34;VALID&#34;, name=&#39;p1&#39;))</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># # resnet blocks</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.shared_model.add(self.build_resblock(64, 2, name=&#39;Resnet_1&#39;))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.shared_model.add(self.build_resblock(80, 2, name=&#39;Resnet_2&#39;, stride=2))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.shared_model.add(self.build_resblock(128, 2, name=&#39;Resnet_3&#39;, stride=2))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># output layer for action model</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">        在这里我先讲一次啊这个代码的输入逻辑，这个input_shape = [4,400,200,3]其实代表着有四帧的画面，像素点是400 * 200 * 3 的 ， 这一部分代码主要是对我看到了什么做一个简单的处理
+</span></span></span><span class="line"><span class="cl"><span class="s1">        &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#经过第一次卷积，像素减半，画面帧数减一 3 * 200 *100 *32</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">input_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;conv1&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#之后两次卷积不再改变形状，只关注画面和通道数量</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">input_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;conv2&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">input_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;conv3&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#到这里画面只有一帧，去除时间信息</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.private_act_model.add(MaxPooling3D(pool_size=(2,2,2), strides=1, padding=&#34;VALID&#34;, name=&#39;p1&#39;))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 使用残差块，这里部分对我看到了什么做了非常具体的处理，每一部分的stride都是2，形状逐次减半，但是通道数逐渐增加，每一个都有两个block</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build_resblock</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Resnet_1&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build_resblock</span><span class="p">(</span><span class="mi">96</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Resnet_2&#39;</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build_resblock</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Resnet_3&#39;</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build_resblock</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Resnet_4&#39;</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">GlobalAveragePooling2D</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.private_act_model.add(Reshape((1, -1)))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.private_act_model.add(CuDNNLSTM(32))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#全连接层</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">act_dim</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&#34;d1&#34;</span><span class="p">))</span>        <span class="c1"># action model</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">act_model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.act_model.add(self.shared_model)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">act_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">private_act_model</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># output layer for move model</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">input_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;conv1&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">input_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;conv2&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv3D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">input_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;conv3&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.private_move_model.add(MaxPooling3D(pool_size=(2,2,2), strides=1, padding=&#34;VALID&#34;, name=&#39;p1&#39;))</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># resnet blocks</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build_resblock</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Resnet_1&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build_resblock</span><span class="p">(</span><span class="mi">96</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Resnet_2&#39;</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build_resblock</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Resnet_3&#39;</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build_resblock</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Resnet_4&#39;</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">GlobalAveragePooling2D</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.private_move_model.add(Reshape((1, -1)))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.private_move_model.add(CuDNNLSTM(32))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&#34;d1&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># action model</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">move_model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.move_model.add(self.shared_model)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">move_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">private_move_model</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
 </section>
 
 
@@ -494,7 +911,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.43a1c7c02ef7950ea736585063d33d3ad957e33dfadff7dbbebd11d2e657144d.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
